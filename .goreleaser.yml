@@ -9,11 +9,8 @@ builds:
       - linux
     goarch:
       - amd64
-      - 386
       - arm
       - arm64
-      - ppc64le
-      - s390x
     goarm:
       - 6
       - 7
@@ -21,7 +18,6 @@ builds:
 archives:
   - replacements:
       linux: Linux
-      386: i386
       amd64: x86_64
     allow_different_binary_count: true
 
