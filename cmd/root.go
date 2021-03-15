@@ -17,7 +17,7 @@ var rootCmd = &cobra.Command{
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		viper.SetConfigName("config")
 		viper.AddConfigPath(".")
-		viper.SetEnvPrefix("bot")
+		viper.SetEnvPrefix("beacon")
 		viper.AutomaticEnv()
 
 		_ = viper.ReadInConfig()

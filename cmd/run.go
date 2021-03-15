@@ -53,13 +53,19 @@ var runCmd = &cobra.Command{
 			panic(err)
 		}
 
+		namespaces := viper.GetStringSlice("namespaces")
+
+		if namespaces == nil || len(namespaces) == 0 {
+			namespaces = []string{""}
+		}
+
 		for {
 			log.Debug().Msg("running update check")
 
 			start := time.Now()
 			imageCache := make(map[string]string)
 
-			for _, namespace := range viper.GetStringSlice("namespaces") {
+			for _, namespace := range namespaces {
 				list, err := clientSet.AppsV1().Deployments(namespace).List(context.TODO(), metav1.ListOptions{
 					LabelSelector: viper.GetString("label") + "=true",
 				})
@@ -73,6 +79,8 @@ var runCmd = &cobra.Command{
 					logDep := log.With().
 						Str("namespace", deployment.Namespace).
 						Str("deployment", deployment.Name).Logger()
+
+					logDep.Trace().Msg("starting update")
 
 					hasAlwaysPull := false
 					requiresUpdate := false
@@ -90,6 +98,12 @@ var runCmd = &cobra.Command{
 							requiresUpdate = true
 							break
 						}
+
+						logDep.Trace().
+							Str("container", container.Name).
+							Str("old", label).
+							Str("image", container.Image).
+							Msg("fetching latest digest")
 
 						digest, err := GetLatestImage(container.Image, &imageCache, accessTokenCache)
 						if err != nil {
