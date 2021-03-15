@@ -36,9 +36,9 @@ changelog:
 
 dockers:
   - image_templates:
-      - "ghcr.io/vilsol/beacon:{{ .Tag }}"
       - "ghcr.io/vilsol/beacon:{{ .Major }}"
       - "ghcr.io/vilsol/beacon:{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/vilsol/beacon:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
       - "ghcr.io/vilsol/beacon:latest"
     build_flag_templates:
       - "--pull"
