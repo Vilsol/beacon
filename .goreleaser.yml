@@ -1,0 +1,52 @@
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - 386
+      - arm
+      - arm64
+      - ppc64le
+      - s390x
+    goarm:
+      - 6
+      - 7
+
+archives:
+  - replacements:
+      linux: Linux
+      386: i386
+      amd64: x86_64
+    allow_different_binary_count: true
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+dockers:
+  - image_templates:
+      - "ghcr.io/vilsol/beacon:{{ .Tag }}"
+      - "ghcr.io/vilsol/beacon:v{{ .Major }}"
+      - "ghcr.io/vilsol/beacon:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/vilsol/beacon:latest"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
