@@ -12,11 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.0.1
       - name: Run chart-testing (lint)
-        uses: helm/chart-testing-action@master
-        with:
-          command: lint
-          config: .github/ct.yaml
+        run: ct lint --all --config .github/ct.yaml
 
   lint-docs:
     runs-on: ubuntu-latest
