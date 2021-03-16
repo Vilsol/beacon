@@ -55,8 +55,14 @@ var runCmd = &cobra.Command{
 
 		namespaces := viper.GetStringSlice("namespaces")
 
-		if namespaces == nil || len(namespaces) == 0 {
+		if len(namespaces) == 0 {
 			namespaces = []string{""}
+		}
+
+		if len(namespaces) == 1 && namespaces[0] == "" {
+			log.Info().Msg("monitoring all namespaces")
+		} else {
+			log.Info().Strs("namespaces", namespaces).Msg("monitoring namespaces")
 		}
 
 		for {
