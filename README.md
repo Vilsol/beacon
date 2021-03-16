@@ -25,3 +25,13 @@ Flags:
 
 Use "beacon [command] --help" for more information about a command.
 ```
+
+## Helm
+
+You can install beacon using helm
+
+```shell
+helm repo add beacon https://vilsol.github.io/beacon/
+helm repo update
+helm install beacon beacon/beacon 
+```
