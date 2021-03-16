@@ -1,0 +1,80 @@
+image:
+  # image.repository -- Image to be used for deployment
+  repository: ghcr.io/vilsol/beacon
+
+  # image.pullPolicy -- Pull policy of the deployment
+  pullPolicy: Always
+
+  # image.tag -- Image tag. Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# imagePullSecrets -- List of secrets for images
+imagePullSecrets: []
+
+# nameOverride -- Name override for all resources
+nameOverride: ""
+
+# fullnameOverride -- Full name override for all resources
+fullnameOverride: ""
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created
+  create: true
+
+  # serviceAccount.annotations -- Annotations to add to the service account
+  annotations: {}
+
+  # serviceAccount.name -- The name of the service account to use.
+  # If not set and serviceAccount.create is true, a name is generated using the fullname template
+  name: ""
+
+# podAnnotations -- Any extra annotations for all pods
+podAnnotations: {}
+
+# podSecurityContext -- Security context override for all pods
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# securityContext -- Security context override for all containers
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# resources -- Any resource configuration applied to all pods
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# nodeSelector -- Specify the nodeSelector for all pods
+nodeSelector: {}
+
+# tolerations -- Specify the tolerations for all pods
+tolerations: []
+
+# affinity -- Specify the affinity for all pods
+affinity: {}
+
+beacon:
+  log:
+    # beacon.log.level -- Level to show log events at
+    level: info
+
+    # beacon.log.pretty -- Pretty print log output instead of json
+    pretty: false
+
+  # beacon.label -- Label to filter deployments
+  label: "vilsol.beacon"
+
+  # beacon.interval -- Interval between checking for updated images
+  interval: 10m
+
+  # beacon.namespaces -- List of namespaces to monitor (empty = all)
+  namespaces: ""

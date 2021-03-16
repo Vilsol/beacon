@@ -1,0 +1,11 @@
+apiVersion: v2
+name: beacon
+description: A Helm chart for kubernetes beacon
+type: application
+version: 0.0.1
+appVersion: 0.0.5
+sources:
+  - https://github.com/vilsol/beacon
+maintainers:
+  - name: Vilsol
+    url: https://github.com/Vilsol
