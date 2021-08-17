@@ -1,4 +1,4 @@
-FROM alpine:edge as base
+FROM alpine:edge@sha256:2f77b6664f181b246244f9cd052155e74fb3f26d2a502edecd5fff0fc4bda388 as base
 
 RUN apk add -U --no-cache ca-certificates
 
