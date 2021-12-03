@@ -161,7 +161,11 @@ var runCmd = &cobra.Command{
 						for _, container := range deployment.Spec.Template.Spec.Containers {
 							digest, err := GetLatestImage(container.Image, &imageCache, accessTokenCache)
 							if err != nil {
-								return err
+								logDep.Err(err).
+									Str("container", container.Name).
+									Str("image", container.Image).
+									Msg("skipping")
+								continue
 							}
 
 							newLabels[viper.GetString("label")+"/"+container.Name] = digest
