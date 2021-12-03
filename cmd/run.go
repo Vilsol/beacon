@@ -94,6 +94,10 @@ var runCmd = &cobra.Command{
 					for _, container := range deployment.Spec.Template.Spec.Containers {
 						if container.ImagePullPolicy == v1.PullAlways {
 							hasAlwaysPull = true
+
+							if requiresUpdate {
+								break
+							}
 						}
 
 						label, ok := deployment.Spec.Template.Labels[viper.GetString("label")+"/"+container.Name]
@@ -102,7 +106,12 @@ var runCmd = &cobra.Command{
 								Str("container", container.Name).
 								Msg("missing container image hash label")
 							requiresUpdate = true
-							break
+
+							if hasAlwaysPull {
+								break
+							} else {
+								continue
+							}
 						}
 
 						logDep.Trace().
@@ -113,7 +122,12 @@ var runCmd = &cobra.Command{
 
 						digest, err := GetLatestImage(container.Image, &imageCache, accessTokenCache)
 						if err != nil {
-							return err
+							logDep.Err(err).
+								Str("container", container.Name).
+								Str("old", label).
+								Str("image", container.Image).
+								Msg("skipping")
+							continue
 						}
 
 						if label != digest {
@@ -124,7 +138,12 @@ var runCmd = &cobra.Command{
 								Str("image", container.Image).
 								Msg("updated image found")
 							requiresUpdate = true
-							break
+
+							if hasAlwaysPull {
+								break
+							} else {
+								continue
+							}
 						}
 					}
 
