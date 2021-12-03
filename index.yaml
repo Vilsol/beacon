@@ -2,6 +2,21 @@ apiVersion: v1
 entries:
   beacon:
   - apiVersion: v2
+    appVersion: 0.0.7
+    created: "2021-12-03T23:31:55.894487905+02:00"
+    description: A Helm chart for kubernetes beacon
+    digest: c88858e283a9292d8fc1a84643662bdb496980e220993e49de99fbad9b4f1e79
+    maintainers:
+    - name: Vilsol
+      url: https://github.com/Vilsol
+    name: beacon
+    sources:
+    - https://github.com/vilsol/beacon
+    type: application
+    urls:
+    - https://github.com/Vilsol/beacon/releases/download/beacon-0.0.6/beacon-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     appVersion: 0.0.6
     created: "2021-12-03T23:13:58.749184197+02:00"
     description: A Helm chart for kubernetes beacon
@@ -31,4 +46,4 @@ entries:
     urls:
     - https://github.com/Vilsol/beacon/releases/download/beacon-0.0.3/beacon-0.0.3.tgz
     version: 0.0.3
-generated: "2021-12-03T23:13:58.749191033+02:00"
+generated: "2021-12-03T23:31:55.894499732+02:00"
