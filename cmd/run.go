@@ -281,6 +281,7 @@ func GetLatestImage(image string, cache *map[string]string, tokenCache *ristrett
 			return "", err
 		}
 		request.Header.Set("Authorization", "Bearer "+tokenResponse.Token)
+		request.Header.Set("Accept", "application/vnd.oci.image.index.v1+json")
 
 		response, err = http.DefaultClient.Do(request)
 		if response == nil {
