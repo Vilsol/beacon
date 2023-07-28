@@ -16,3 +16,5 @@ fi
 
 # validate charts
 helm template helm/beacon/ | $KUBEVAL_PATH --strict --ignore-missing-schemas --kubernetes-version "${KUBERNETES_VERSION#v}" --schema-location "${SCHEMA_LOCATION}"
+
+rm $KUBEVAL_PATH
