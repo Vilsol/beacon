@@ -16,9 +16,11 @@ builds:
       - 7
 
 archives:
-  - replacements:
-      linux: Linux
-      amd64: x86_64
+  - name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else }}{{ .Arch }}{{ end }}
     allow_different_binary_count: true
 
 checksum:
@@ -34,15 +36,15 @@ changelog:
       - '^docs:'
       - '^test:'
 
-dockers:
-  - image_templates:
-      - "ghcr.io/vilsol/beacon:{{ .Major }}"
-      - "ghcr.io/vilsol/beacon:{{ .Major }}.{{ .Minor }}"
-      - "ghcr.io/vilsol/beacon:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
-      - "ghcr.io/vilsol/beacon:latest"
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.title={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
+kos:
+  - repository: ghcr.io/vilsol/beacon
+    tags:
+      - "{{ .Tag }}"
+      - "v{{ .Major }}"
+      - "v{{ .Major }}.{{ .Minor }}"
+      - "latest"
+    bare: true
+    platforms:
+      - linux/amd64
+      - linux/arm64
+      - linux/arm/v7
