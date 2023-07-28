@@ -26,8 +26,6 @@ jobs:
       - uses: envoy/install-helm-docs@v1.0.0
         with:
           version: 1.11.0
-      - name: Install git
-        run: sh -c "apk add --no-cache git"
       - name: Run helm-docs
         run: sh -c "helm-docs && git diff --exit-code"
 
